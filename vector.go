@@ -2,6 +2,12 @@ package main
 
 import "math"
 
+/* In this file, we define a Vector.
+* A vector is primarily interpreted as an arrow starting from the origin,
+* and ending at point (x,y,z).
+* However, it can also be thought of as a single point (x,y,x) in space.
+ */
+
 type Vector struct {
 	X, Y, Z float64
 }
@@ -58,12 +64,8 @@ func (this *Vector) Normalize() {
 }
 
 // Dot Product
-func (this *Vector) Dot(v Vector) *Vector {
-	return &Vector{
-		X: this.X * v.X,
-		Y: this.Y * v.Y,
-		Z: this.Z * v.Z,
-	}
+func (this *Vector) Dot(v Vector) float64 {
+	return this.X*v.X + this.Y*v.Y + this.Z*v.Z
 }
 
 // Cross Product
