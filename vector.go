@@ -13,8 +13,8 @@ type Vector struct {
 }
 
 // New Vector Object
-func NewVector(x, y, z float64) *Vector {
-	return &Vector{
+func NewVector(x, y, z float64) Vector {
+	return Vector{
 		X: x,
 		Y: y,
 		Z: z,

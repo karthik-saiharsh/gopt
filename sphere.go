@@ -17,8 +17,8 @@ type Sphere struct {
 	material                  Material
 }
 
-func NewSphere(r float64, p, e, c Vector, m Material) *Sphere {
-	return &Sphere{
+func NewSphere(r float64, p, e, c Vector, m Material) Sphere {
+	return Sphere{
 		radius:   r,
 		position: p,
 		emission: e,
