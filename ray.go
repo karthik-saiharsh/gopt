@@ -12,9 +12,6 @@ type Ray struct {
 	origin, direction Vector
 }
 
-func NewRay(o, d Vector) *Ray {
-	return &Ray{
-		origin:    o,
-		direction: d,
-	}
+func NewRay(o, d Vector) Ray {
+	return Ray{origin: o, direction: d}
 }

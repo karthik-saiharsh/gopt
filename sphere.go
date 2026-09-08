@@ -27,18 +27,18 @@ func NewSphere(r float64, p, e, c Vector, m Material) Sphere {
 	}
 }
 
-func (this *Sphere) Intersect(r *Ray) float64 {
-	var op Vector = *this.position.Sub(r.origin)
+func (s Sphere) Intersect(r Ray) float64 {
+	op := s.position.Sub(r.origin)
 
-	var eps float64 = 1e-4
-	var b float64 = op.Dot(r.direction)
-	var det float64 = b*b - op.Dot(op) + this.radius*this.radius
+	eps := 1e-4
+	b := op.Dot(r.direction)
+	det := b*b - op.Dot(op) + s.radius*s.radius
 
 	if det < 0 {
 		return 0
-	} else {
-		det = math.Sqrt(det)
 	}
+
+	det = math.Sqrt(det)
 
 	if b-det > eps {
 		return b - det

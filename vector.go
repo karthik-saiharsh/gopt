@@ -3,76 +3,69 @@ package main
 import "math"
 
 /* In this file, we define a Vector.
-* A vector is primarily interpreted as an arrow starting from the origin,
-* and ending at point (x,y,z).
-* However, it can also be thought of as a single point (x,y,x) in space.
+ * A vector is primarily interpreted as an arrow starting from the origin,
+ * and ending at point (x,y,z).
+ * However, it can also be thought of as a single point (x,y,z) in space.
  */
 
 type Vector struct {
 	X, Y, Z float64
 }
 
-// New Vector Object
+// NewVector creates a vector value.
 func NewVector(x, y, z float64) Vector {
+	return Vector{X: x, Y: y, Z: z}
+}
+
+// Add returns v + other.
+func (v Vector) Add(other Vector) Vector {
+	return Vector{X: v.X + other.X, Y: v.Y + other.Y, Z: v.Z + other.Z}
+}
+
+// Sub returns v - other.
+func (v Vector) Sub(other Vector) Vector {
+	return Vector{X: v.X - other.X, Y: v.Y - other.Y, Z: v.Z - other.Z}
+}
+
+// Scale returns v scaled by n.
+func (v Vector) Scale(n float64) Vector {
+	return Vector{X: v.X * n, Y: v.Y * n, Z: v.Z * n}
+}
+
+// Mul returns the component-wise product of two vectors.
+func (v Vector) Mul(other Vector) Vector {
+	return Vector{X: v.X * other.X, Y: v.Y * other.Y, Z: v.Z * other.Z}
+}
+
+// Length returns the Euclidean norm.
+func (v Vector) Length() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y + v.Z*v.Z)
+}
+
+// Normalized returns a unit-length copy of the vector.
+func (v Vector) Normalized() Vector {
+	length := v.Length()
+	if length == 0 {
+		return v
+	}
+	return v.Scale(1 / length)
+}
+
+// Normalize mutates the current vector to unit length.
+func (v *Vector) Normalize() {
+	*v = v.Normalized()
+}
+
+// Dot returns the dot product.
+func (v Vector) Dot(other Vector) float64 {
+	return v.X*other.X + v.Y*other.Y + v.Z*other.Z
+}
+
+// Cross returns the cross product.
+func (v Vector) Cross(other Vector) Vector {
 	return Vector{
-		X: x,
-		Y: y,
-		Z: z,
-	}
-}
-
-// Add Operation
-func (this *Vector) Add(v Vector) *Vector {
-	return &Vector{
-		X: this.X + v.X,
-		Y: this.Y + v.Y,
-		Z: this.Z + v.Z,
-	}
-}
-
-// Subtract Operation
-func (this *Vector) Sub(v Vector) *Vector {
-	return &Vector{
-		X: this.X - v.X,
-		Y: this.Y - v.Y,
-		Z: this.Z - v.Z,
-	}
-}
-
-// Scale Operation
-func (this *Vector) Scale(n float64) *Vector {
-	return &Vector{
-		X: this.X * n,
-		Y: this.Y * n,
-		Z: this.Z * n,
-	}
-}
-
-// Direct Multiplication Operation
-func (this *Vector) Mul(v Vector) *Vector {
-	return &Vector{
-		X: this.X * v.X,
-		Y: this.Y * v.Y,
-		Z: this.Z * v.Z,
-	}
-}
-
-// Normalize the current vector
-func (this *Vector) Normalize() {
-	var scaleVal float64 = 1 / math.Sqrt(this.X*this.X+this.Y*this.Y+this.Z*this.Z)
-	this = this.Scale(scaleVal)
-}
-
-// Dot Product
-func (this *Vector) Dot(v Vector) float64 {
-	return this.X*v.X + this.Y*v.Y + this.Z*v.Z
-}
-
-// Cross Product
-func (this *Vector) Cross(v Vector) *Vector {
-	return &Vector{
-		X: this.Y*v.Z - this.Z*v.Y,
-		Y: this.Z*v.X - this.X*v.Z,
-		Z: this.X*v.Y - this.Y*v.X,
+		X: v.Y*other.Z - v.Z*other.Y,
+		Y: v.Z*other.X - v.X*other.Z,
+		Z: v.X*other.Y - v.Y*other.X,
 	}
 }
